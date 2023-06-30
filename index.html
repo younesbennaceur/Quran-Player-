@@ -15,13 +15,20 @@
 <div class="container">
      <div class="audiobar">
          <div class="ayah">
-            <h4>إضغط على السورة للاستماع إليها</h4>
+            
+          <h4>
+            إضغط على السورة للاستماع إليها
+
+            </h4>
+          </div>
+          <div id="ayah_eng" class="ayah ">
+            <h4>Click on the surah to listen to it</h4>
           </div>
          <audio src="" class="quran_sot" controls></audio>
          <div class="buttons">
-             <div class="icon next"><i class="fas fa-forward"></i>  </div>
-             <div class="icon play"><i class="fas fa-play"></i>  </div>
-             <div class="icon prev"><i class="fas fa-backward"></i>  </div>
+             <div id="next" class="icon next"><i class="fas fa-forward"></i>  </div>
+             <div id="play" class="icon play"><i class="fas fa-play"></i>  </div>
+             <div id="prev" class="icon prev"><i class="fas fa-backward"></i>  </div>
              </div>
 
 
@@ -42,5 +49,6 @@
 
 
     <script src="./index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

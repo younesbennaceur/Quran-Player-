@@ -1,9 +1,10 @@
 let audio=document.querySelector( ".quran_sot")
  let surahcontainer=document.querySelector(".surahs")
 let ayah=document.querySelector(".ayah")
- let next=document.querySelector(".icon next")
-  let play=document.querySelector(".icon play")
- let prev=document.querySelector(".icon prev")
+ let next=document.querySelector("#next")
+  let play=document.querySelector("#play")
+ let prev=document.querySelector("#prev")
+ let ayah_eng=document.querySelector("#ayah_eng")
 
 
 const getsurah= async ()=>{
@@ -20,6 +21,7 @@ const getsurah= async ()=>{
         let  allsurahs =document.querySelectorAll('.surahs div')
         let ayah_audio ;
         let ayah_text 
+        let ayah_text_eng
        
         allsurahs.forEach((surah,number)=>{
           surah.addEventListener('click', async ()=>{
@@ -28,36 +30,83 @@ const getsurah= async ()=>{
           let verses=resp2.data.ayahs
           ayah_audio=[]
           ayah_text=[]
+          ayah_text_eng=[]
           
             
           verses.forEach(ayahs =>{
             ayah_audio.push(ayahs.audio)
            ayah_text.push(ayahs.text.ar)
+           ayah_text_eng.push(ayahs.text.read)
 
             
             
           });
-          console.log(ayah_audio)
-          console.log(ayah_text)
+         
           let ayah_index=0
 
           change_ayah(ayah_index);
           audio.addEventListener('ended', () => {
             ayah_index++;
             change_ayah(ayah_index);
-            if(ayah_index<ayah_audio.length){
+            if(ayah_index < ayah_text.length  ){
               change_ayah()
 
-            }else{
-              alert("انتهت السورة")
-              audio.pause()
+            }
+             if(ayah_index===ayah_audio.length - 1){
+             
+              
               ayah_index=0
+              
+              audio.pause()
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'إنتهت السورة إستمع الى المزيد',
+                showConfirmButton: false,
+                timer: 3000
+              })
             }
           });
+          next.addEventListener('click', () => {
+            if (ayah_index<ayah_audio.length) {
+              ayah_index++
+              change_ayah(ayah_index)
+            }
+           
+          })
+          prev.addEventListener('click', ()=> {
+            ayah_index--
+            change_ayah(ayah_index)
+
+          })
+          
+          play.addEventListener('click',change_toggle)
+          
+
+          let isplaying=false
+          change_toggle()
+          function change_toggle () {
+            if (isplaying){
+             
+              audio.pause()
+              play.innerHTML=`<i class="fas fa-play"></i>`
+              isplaying=false
+            }else{
+              audio.play()
+              play.innerHTML=`<i class="fas fa-pause"></i>`
+              isplaying=true
+
+            }
+            
+          }
+         
           
           function change_ayah(y) {
-            audio.src = https://everyayah.com/data/ahmed_ibn_ali_al_ajamy_128kbps/001007.mp3";
+            
+            audio.src = ayah_audio[y].url;
+           
             ayah.innerHTML = ayah_text[y];
+            ayah_eng.innerHTML=ayah_text_eng[y]
            
           
             audio.play();
